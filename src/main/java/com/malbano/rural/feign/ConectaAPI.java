@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient(name = "dados", url = "https://olinda.bcb.gov.br/")
 public interface ConectaAPI {
 
-    @GetMapping(path = "olinda/servico/SICOR/versao/v2/odata/ComercRegiaoUFProduto?$top=1000&$format=json")
+    @GetMapping(path = "olinda/servico/SICOR/versao/v2/odata/ComercRegiaoUFProduto?$top=500&$format=json")
     DadosList buscarDados();
 }
