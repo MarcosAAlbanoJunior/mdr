@@ -1,15 +1,23 @@
-package com.malbano.rural.dados;
+package com.malbano.rural.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import javax.persistence.*;
 
-import java.math.BigDecimal;
 
 @Data
+@Entity
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-public class Dados {
+public class DadosEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String nomeProduto;
     private String nomeRegiao;
@@ -31,5 +39,6 @@ public class Dados {
     private String cdModalidade;
     @JsonProperty("AreaCusteio")
     private Double areaCusteio;
+
 
 }

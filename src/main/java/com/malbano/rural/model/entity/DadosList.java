@@ -1,8 +1,8 @@
-package com.malbano.rural.dados;
+package com.malbano.rural.model.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.malbano.rural.model.dto.DadosDTO;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import java.util.List;
 @NoArgsConstructor
 public class DadosList {
 
-   private List<Dados> value;
+   private List<DadosDTO> value;
 }
