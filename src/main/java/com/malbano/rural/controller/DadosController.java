@@ -4,25 +4,31 @@ import com.malbano.rural.model.dto.DadosDTO;
 import com.malbano.rural.model.entity.DadosEntity;
 import com.malbano.rural.model.entity.DadosList;
 import com.malbano.rural.feign.ConectaAPI;
+import com.malbano.rural.model.repository.DadosRepository;
 import com.malbano.rural.service.DadosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 public class DadosController {
 
     @Autowired
     private DadosService service;
+
+    @Autowired
+    private DadosRepository dadosDAO;
     @Autowired
     ConectaAPI conectaAPI;
 
     @PostMapping(path = "/insert")
-    public ResponseEntity<List<DadosEntity>> insert() {
+    public ResponseEntity<Iterable<DadosEntity>> insert() {
         DadosList dadosList = conectaAPI.getDados();
         return ResponseEntity.ok().body(service.insert(dadosList));
     }
@@ -31,6 +37,12 @@ public class DadosController {
     public ResponseEntity get(){
         return ResponseEntity.ok(service.getDados());
     }
+
+    @GetMapping("/dados")
+    public ResponseEntity<?> getPageable(Pageable pageable){
+        return new ResponseEntity<>(dadosDAO.findAll(pageable), HttpStatus.OK);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id){

@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class DadosService {
@@ -20,7 +21,7 @@ public class DadosService {
     @Autowired
     private DadosRepository rep;
 
-    public List<DadosEntity> insert(DadosList dados) {
+    public Iterable<DadosEntity> insert(DadosList dados) {
         for (DadosDTO x : dados.getValue()) {
             DadosEntity dadosEntity = DTOtoEntityParse.dadosDTOtoDadosEntity(x);
             rep.save(dadosEntity);
@@ -29,7 +30,7 @@ public class DadosService {
     }
 
     public List<DadosDTO> getDados(){
-        return rep.findAll().stream().map(DadosDTO::create).collect(Collectors.toList());
+        return StreamSupport.stream(rep.findAll().spliterator(), false).map(DadosDTO::create).collect(Collectors.toList());
 
     }
     public DadosDTO getDadosByID(Long id) {
