@@ -4,12 +4,9 @@ import com.malbano.rural.model.dto.DadosDTO;
 import com.malbano.rural.model.entity.DadosEntity;
 import com.malbano.rural.model.entity.DadosList;
 import com.malbano.rural.feign.ConectaAPI;
-import com.malbano.rural.model.repository.DadosRepository;
 import com.malbano.rural.service.DadosService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,13 +14,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
+@RequestMapping("/api/dados")
 public class DadosController {
 
     @Autowired
     private DadosService service;
 
-    @Autowired
-    private DadosRepository dadosDAO;
     @Autowired
     ConectaAPI conectaAPI;
 
@@ -38,10 +34,11 @@ public class DadosController {
         return ResponseEntity.ok(service.getDados());
     }
 
-    @GetMapping("/dados")
-    public ResponseEntity<?> getPageable(Pageable pageable){
-        return new ResponseEntity<>(dadosDAO.findAll(pageable), HttpStatus.OK);
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<DadosEntity>> getPageable(@RequestParam("page") int page, @RequestParam("size") int size){
+        return ResponseEntity.ok(service.getPageable(page, size));
     }
+
 
 
     @GetMapping("/{id}")

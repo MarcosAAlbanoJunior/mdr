@@ -7,6 +7,10 @@ import com.malbano.rural.model.entity.DadosList;
 import com.malbano.rural.model.mapper.DTOtoEntityParse;
 import com.malbano.rural.model.repository.DadosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -30,9 +34,15 @@ public class DadosService {
     }
 
     public List<DadosDTO> getDados(){
-        return StreamSupport.stream(rep.findAll().spliterator(), false).map(DadosDTO::create).collect(Collectors.toList());
+        return rep.findAll().stream().map(DadosDTO::create).collect(Collectors.toList());
 
     }
+
+    public Page<DadosEntity> getPageable(int page, int size){
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "id");
+        return rep.pageable(pageRequest);
+    }
+
     public DadosDTO getDadosByID(Long id) {
         Optional<DadosEntity> dados = rep.findById(id);
         return dados.map(DadosDTO::create).orElseThrow(() -> new ObjectNotFoundException("Dados não encontrado"));
@@ -47,7 +57,7 @@ public class DadosService {
     public DadosDTO update(DadosEntity dados, Long id) {
         Assert.notNull(id,"Não foi possível atualizar o registro");
 
-        // Busca o carro no banco de dados
+        // Busca os dados no banco de dados
         Optional<DadosEntity> optional = rep.findById(id);
         if(optional.isPresent()) {
             DadosEntity db = optional.get();
@@ -68,7 +78,7 @@ public class DadosService {
             db.setVlCusteio(dados.getVlCusteio());
             System.out.println("Dados id " + db.getId());
 
-            // Atualiza o carro
+            // Atualiza os dados
             rep.save(db);
 
             return DadosDTO.create(db);
