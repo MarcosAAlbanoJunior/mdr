@@ -1,6 +1,7 @@
 package com.malbano.rural.service;
 
 import com.malbano.rural.exception.ObjectNotFoundException;
+import com.malbano.rural.model.dto.AcumuloDTO;
 import com.malbano.rural.model.dto.DadosDTO;
 import com.malbano.rural.model.entity.DadosEntity;
 import com.malbano.rural.model.entity.DadosList;
@@ -38,9 +39,13 @@ public class DadosService {
 
     }
 
-    public Page<DadosEntity> getPageable(int page, int size){
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "id");
-        return rep.pageable(pageRequest);
+//    public Page<DadosEntity> getPageable(int page, int size){
+//        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "id");
+//        return rep.pageable(pageRequest);
+//    }
+
+    public List<DadosDTO> getPageable(Pageable pageable){
+        return rep.findAll(pageable).stream().map(DadosDTO::create).collect(Collectors.toList());
     }
 
     public DadosDTO getDadosByID(Long id) {
@@ -48,10 +53,19 @@ public class DadosService {
         return dados.map(DadosDTO::create).orElseThrow(() -> new ObjectNotFoundException("Dados não encontrado"));
     }
 
+    public List<DadosDTO> search(String query) {
+        List<DadosDTO> list = rep.findByNomeRegiaoContains(query).stream().map(DadosDTO::create).collect(Collectors.toList());
+        return list;
+    }
+
     public DadosDTO insert(DadosEntity dados) {
         Assert.isNull(dados.getId(), "Não foi possivel inserir o registro");
 
         return DadosDTO.create(rep.save(dados));
+    }
+
+    public List<AcumuloDTO> total(String anoEmissao){
+        return rep.findByAnoEmissao(anoEmissao);
     }
 
     public DadosDTO update(DadosEntity dados, Long id) {
@@ -90,5 +104,9 @@ public class DadosService {
 
     public void delete(Long id) {
         rep.deleteById(id);
+    }
+
+    public void deleteAll() {
+        rep.deleteAll();
     }
 }

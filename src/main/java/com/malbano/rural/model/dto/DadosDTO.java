@@ -2,6 +2,7 @@ package com.malbano.rural.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.malbano.rural.model.entity.DadosEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -10,6 +11,8 @@ import javax.persistence.*;
 import java.lang.reflect.Type;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class DadosDTO{
 
     private Long id;

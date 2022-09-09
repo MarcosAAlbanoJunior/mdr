@@ -39,6 +39,4 @@ public class DadosEntity {
     private String cdModalidade;
     @JsonProperty("AreaCusteio")
     private Double areaCusteio;
-
-
 }

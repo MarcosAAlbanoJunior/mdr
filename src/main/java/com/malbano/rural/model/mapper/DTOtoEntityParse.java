@@ -17,7 +17,7 @@ public class DTOtoEntityParse {
                 .cdTipoSeguro(dto.getCdTipoSeguro())
                 .nomeUF(dto.getNomeUF())
                 .mesEmissao(dto.getMesEmissao())
-                .nomeProduto(dto.getNomeProduto())
+                .nomeProduto(dto.getNomeProduto().replaceAll("\"", ""))
                 .nomeRegiao(dto.getNomeRegiao())
                 .qtdCusteio(dto.getQtdCusteio())
                 .vlCusteio(dto.getVlCusteio())
