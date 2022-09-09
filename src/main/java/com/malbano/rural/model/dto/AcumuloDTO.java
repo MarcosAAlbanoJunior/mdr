@@ -17,7 +17,7 @@ public class AcumuloDTO {
     private String nomeRegiao;
     private String nomeUF;
     private String anoEmissao;
-    private Double vlCusteioTotal;
+    private BigDecimal vlCusteioTotal;
 
 
     public static AcumuloDTO create(DadosEntity dados) {

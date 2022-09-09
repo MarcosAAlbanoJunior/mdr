@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -30,7 +31,7 @@ public class DadosDTO{
     @JsonProperty("QtdCusteio")
     private Integer qtdCusteio;
     @JsonProperty("VlCusteio")
-    private Double vlCusteio;
+    private BigDecimal vlCusteio;
     @JsonProperty("Atividade")
     private String atividade;
     private String cdModalidade;
