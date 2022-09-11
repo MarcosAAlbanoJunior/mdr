@@ -31,7 +31,7 @@ public class DadosDTO{
     @JsonProperty("QtdCusteio")
     private Integer qtdCusteio;
     @JsonProperty("VlCusteio")
-    private BigDecimal vlCusteio;
+    private Double vlCusteio;
     @JsonProperty("Atividade")
     private String atividade;
     private String cdModalidade;

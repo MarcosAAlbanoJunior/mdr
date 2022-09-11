@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +37,11 @@ public class DadosService {
 
     public List<DadosDTO> getDados(){
         return rep.findAll().stream().map(DadosDTO::create).collect(Collectors.toList());
+
+    }
+
+    public List<DadosDTO> getDadosFilter(String nomeProduto, String nomeRegiao, String nomeUF, String cdPrograma, String cdSubPrograma, String cdFonteRecurso, String cdTipoSeguro, String cdModalidade, String mesEmissao, String anoEmissao, Integer qtdCusteio, Double vlCusteio, String atividade, Double areaCusteio){
+            return rep.findAllFiltro(nomeProduto, nomeRegiao, nomeUF, cdPrograma, cdSubPrograma, cdFonteRecurso, cdTipoSeguro, cdModalidade, mesEmissao, anoEmissao, qtdCusteio, vlCusteio, atividade, areaCusteio);
 
     }
 
