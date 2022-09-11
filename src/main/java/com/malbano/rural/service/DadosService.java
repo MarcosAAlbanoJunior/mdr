@@ -1,15 +1,21 @@
 package com.malbano.rural.service;
 
 import com.malbano.rural.exception.ObjectNotFoundException;
+import com.malbano.rural.model.dto.AcumuloDTO;
 import com.malbano.rural.model.dto.DadosDTO;
 import com.malbano.rural.model.entity.DadosEntity;
 import com.malbano.rural.model.entity.DadosList;
 import com.malbano.rural.model.mapper.DTOtoEntityParse;
 import com.malbano.rural.model.repository.DadosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,12 +36,32 @@ public class DadosService {
     }
 
     public List<DadosDTO> getDados(){
-        return StreamSupport.stream(rep.findAll().spliterator(), false).map(DadosDTO::create).collect(Collectors.toList());
+        return rep.findAll().stream().map(DadosDTO::create).collect(Collectors.toList());
 
     }
+
+    public List<DadosDTO> getDadosFilter(String nomeProduto, String nomeRegiao, String nomeUF, String cdPrograma, String cdSubPrograma, String cdFonteRecurso, String cdTipoSeguro, String cdModalidade, String mesEmissao, String anoEmissao, Integer qtdCusteio, Double vlCusteio, String atividade, Double areaCusteio){
+            return rep.findAllFiltro(nomeProduto, nomeRegiao, nomeUF, cdPrograma, cdSubPrograma, cdFonteRecurso, cdTipoSeguro, cdModalidade, mesEmissao, anoEmissao, qtdCusteio, vlCusteio, atividade, areaCusteio);
+
+    }
+
+//    public Page<DadosEntity> getPageable(int page, int size){
+//        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "id");
+//        return rep.pageable(pageRequest);
+//    }
+
+    public List<DadosDTO> getPageable(Pageable pageable){
+        return rep.findAll(pageable).stream().map(DadosDTO::create).collect(Collectors.toList());
+    }
+
     public DadosDTO getDadosByID(Long id) {
         Optional<DadosEntity> dados = rep.findById(id);
         return dados.map(DadosDTO::create).orElseThrow(() -> new ObjectNotFoundException("Dados não encontrado"));
+    }
+
+    public List<DadosDTO> search(String query) {
+        List<DadosDTO> list = rep.findByNomeRegiaoContains(query).stream().map(DadosDTO::create).collect(Collectors.toList());
+        return list;
     }
 
     public DadosDTO insert(DadosEntity dados) {
@@ -44,10 +70,14 @@ public class DadosService {
         return DadosDTO.create(rep.save(dados));
     }
 
+    public List<AcumuloDTO> total(String anoEmissao){
+        return rep.findByAnoEmissao(anoEmissao);
+    }
+
     public DadosDTO update(DadosEntity dados, Long id) {
         Assert.notNull(id,"Não foi possível atualizar o registro");
 
-        // Busca o carro no banco de dados
+        // Busca os dados no banco de dados
         Optional<DadosEntity> optional = rep.findById(id);
         if(optional.isPresent()) {
             DadosEntity db = optional.get();
@@ -68,7 +98,7 @@ public class DadosService {
             db.setVlCusteio(dados.getVlCusteio());
             System.out.println("Dados id " + db.getId());
 
-            // Atualiza o carro
+            // Atualiza os dados
             rep.save(db);
 
             return DadosDTO.create(db);
@@ -80,5 +110,9 @@ public class DadosService {
 
     public void delete(Long id) {
         rep.deleteById(id);
+    }
+
+    public void deleteAll() {
+        rep.deleteAll();
     }
 }

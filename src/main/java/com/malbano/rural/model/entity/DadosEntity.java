@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 
 @Data
@@ -39,6 +40,4 @@ public class DadosEntity {
     private String cdModalidade;
     @JsonProperty("AreaCusteio")
     private Double areaCusteio;
-
-
 }
