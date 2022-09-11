@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +39,13 @@ public class DadosController {
     @GetMapping()
     public ResponseEntity get(){
         return ResponseEntity.ok(service.getDados());
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity getSearch(@Param(value = "nomeProduto") String nomeProduto, @Param(value = "nomeRegiao") String nomeRegiao, @Param(value = "nomeUF") String nomeUF, @Param(value = "cdPrograma") String cdPrograma, @Param(value = "cdSubPrograma") String cdSubPrograma,
+                                    @Param(value = "cdFonteRecurso") String cdFonteRecurso, @Param(value = "cdTipoSeguro") String cdTipoSeguro, @Param(value = "cdModalidade") String cdModalidade, @Param(value = "mesEmissao") String mesEmissao, @Param(value = "anoEmissao") String anoEmissao, @Param(value = "qtdCusteio") Integer qtdCusteio,
+                                    @Param(value = "vlCusteio") Double vlCusteio, @Param(value = "atividade") String atividade, @Param(value = "areaCusteio") Double areaCusteio){
+        return ResponseEntity.ok(service.getDadosFilter(nomeProduto, nomeRegiao, nomeUF, cdPrograma, cdSubPrograma, cdFonteRecurso, cdTipoSeguro, cdModalidade, mesEmissao, anoEmissao, qtdCusteio, vlCusteio, atividade, areaCusteio));
     }
 
     @GetMapping("/pageable")

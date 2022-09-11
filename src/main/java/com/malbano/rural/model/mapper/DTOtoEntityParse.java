@@ -3,6 +3,8 @@ package com.malbano.rural.model.mapper;
 import com.malbano.rural.model.dto.DadosDTO;
 import com.malbano.rural.model.entity.DadosEntity;
 
+
+
 public class DTOtoEntityParse {
 
     public static DadosEntity dadosDTOtoDadosEntity(DadosDTO dto){

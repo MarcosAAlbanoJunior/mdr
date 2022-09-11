@@ -14,13 +14,11 @@ import java.math.BigDecimal;
 public class AcumuloDTO {
 
     private String nomeProduto;
-    private String nomeRegiao;
-    private String nomeUF;
     private String anoEmissao;
-    private BigDecimal vlCusteioTotal;
+    private Double vlCusteioTotal;
 
 
-    public static AcumuloDTO create(DadosEntity dados) {
+    public static AcumuloDTO create(DadosDTO dados) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(dados, AcumuloDTO.class);
     }
