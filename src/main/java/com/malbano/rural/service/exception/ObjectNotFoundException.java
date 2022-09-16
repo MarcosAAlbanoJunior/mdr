@@ -1,4 +1,4 @@
-package com.malbano.rural.exception;
+package com.malbano.rural.service.exception;
 
 public class ObjectNotFoundException extends RuntimeException{
         public ObjectNotFoundException(String message) { super(message); }

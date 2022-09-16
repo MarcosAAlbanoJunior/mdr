@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigDecimal;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,10 @@ public interface DadosRepository extends JpaRepository<DadosEntity, Long> {
             "c.atividade as atividade, c.cdModalidade as cdModalidade, c.areaCusteio as areaCusteio) FROM DadosEntity c " +
             "WHERE (:nomeProduto IS NULL OR c.nomeProduto = :nomeProduto) AND (:nomeRegiao IS NULL OR c.nomeRegiao = :nomeRegiao) AND (:nomeUF IS NULL OR c.nomeUF = :nomeUF) AND (:cdPrograma IS NULL OR c.cdPrograma = :cdPrograma) AND (:cdSubPrograma IS NULL OR c.cdSubPrograma = :cdSubPrograma) AND (:cdFonteRecurso IS NULL OR c.cdFonteRecurso = :cdFonteRecurso) AND (:cdTipoSeguro IS NULL OR c.cdTipoSeguro = :cdTipoSeguro) " +
             "AND (:cdModalidade IS NULL OR c.cdModalidade = :cdModalidade) AND (:mesEmissao IS NULL OR c.mesEmissao = :mesEmissao) AND (:anoEmissao IS NULL OR c.anoEmissao = :anoEmissao) AND (:qtdCusteio IS NULL OR c.qtdCusteio = :qtdCusteio) AND (:vlCusteio IS NULL OR c.vlCusteio = :vlCusteio) AND (:atividade IS NULL OR c.atividade = :atividade) AND (:areaCusteio IS NULL OR c.areaCusteio = :areaCusteio)")
-    List<DadosDTO> findAllFiltro(String nomeProduto, String nomeRegiao, String nomeUF, String cdPrograma, String cdSubPrograma, String cdFonteRecurso, String cdTipoSeguro, String cdModalidade, String mesEmissao, String anoEmissao, Integer qtdCusteio, Double vlCusteio, String atividade, Double areaCusteio);
+    List<DadosDTO> findAllFiltro(String nomeProduto, String nomeRegiao, String nomeUF, String cdPrograma, String cdSubPrograma, String cdFonteRecurso, String cdTipoSeguro, String cdModalidade, String mesEmissao, String anoEmissao, Integer qtdCusteio, BigDecimal vlCusteio, String atividade, Double areaCusteio);
+
+//    @Query(value = "DROP TABLE DadosEntity e")
+//    void DeleteAll();
+
 
 }
