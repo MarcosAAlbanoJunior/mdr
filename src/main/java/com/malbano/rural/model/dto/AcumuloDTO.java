@@ -15,7 +15,7 @@ public class AcumuloDTO {
 
     private String nomeProduto;
     private String anoEmissao;
-    private Double vlCusteioTotal;
+    private BigDecimal vlCusteioTotal;
 
 
     public static AcumuloDTO create(DadosDTO dados) {

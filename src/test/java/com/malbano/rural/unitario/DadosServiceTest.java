@@ -1,18 +1,12 @@
 package com.malbano.rural.unitario;
 
-import com.malbano.rural.exception.ObjectNotFoundException;
+import com.malbano.rural.service.exception.ObjectNotFoundException;
 import com.malbano.rural.model.dto.DadosDTO;
 import com.malbano.rural.model.entity.DadosEntity;
-import com.malbano.rural.model.entity.DadosList;
 import com.malbano.rural.service.DadosService;
-import com.malbano.rural.unitario.lista.ListaTesteUnitario;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
