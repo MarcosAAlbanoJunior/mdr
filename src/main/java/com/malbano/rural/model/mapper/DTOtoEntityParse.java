@@ -9,6 +9,7 @@ public class DTOtoEntityParse {
 
     public static DadosEntity dadosDTOtoDadosEntity(DadosDTO dto){
         return  new DadosEntity().builder()
+                .id(dto.getId())
                 .areaCusteio(dto.getAreaCusteio())
                 .anoEmissao(dto.getAnoEmissao())
                 .atividade(dto.getAtividade())
