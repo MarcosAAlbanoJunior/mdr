@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -32,7 +34,7 @@ public class DadosServiceTest {
         dados.setNomeRegiao("SUL");
         dados.setNomeUF("PR");
         dados.setQtdCusteio(9);
-        dados.setVlCusteio(7000000.00);
+        dados.setVlCusteio(BigDecimal.valueOf(7000000.00));
 
         DadosDTO d = service.insert(dados);
 
@@ -73,13 +75,5 @@ public class DadosServiceTest {
             //OK
         }
     }
-//
-//    @Test
-//    public void listDTO(){
-//        ListaTesteUnitario teste = null;
-//        DadosList list = null;
-//        list.setValue((List<DadosDTO>) teste.getD1());
-//        assertNotNull(list);
-//
-//    }
+
 }
