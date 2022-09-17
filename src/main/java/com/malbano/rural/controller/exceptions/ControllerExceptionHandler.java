@@ -2,6 +2,7 @@ package com.malbano.rural.controller.exceptions;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.malbano.rural.service.exception.MethodNotAllowed;
 import com.malbano.rural.service.exception.ObjectNotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -55,6 +56,14 @@ public class ControllerExceptionHandler{
     public ResponseEntity<StandardError> badRequestCampo(HttpMessageNotReadableException e,HttpServletRequest request) {
         String error = "Database error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler({MethodNotAllowed.class})
+    public ResponseEntity<StandardError> notAlowwedOnboarding(MethodNotAllowed e,HttpServletRequest request) {
+        String error = "Insert Error";
+        HttpStatus status = HttpStatus.METHOD_NOT_ALLOWED;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }

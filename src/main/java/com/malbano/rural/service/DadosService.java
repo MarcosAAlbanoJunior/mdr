@@ -1,6 +1,7 @@
 package com.malbano.rural.service;
 
 import com.malbano.rural.model.mapper.EntitytoDTOParse;
+import com.malbano.rural.service.exception.MethodNotAllowed;
 import com.malbano.rural.service.exception.ObjectNotFoundException;
 import com.malbano.rural.model.dto.AcumuloDTO;
 import com.malbano.rural.model.dto.DadosDTO;
@@ -26,12 +27,18 @@ public class DadosService {
     private DadosRepository rep;
 
     public Iterable<DadosEntity> insert(DadosList dados) {
-        for (DadosDTO x : dados.getValue()) {
-            DadosEntity dadosEntity = DTOtoEntityParse.dadosDTOtoDadosEntity(x);
-            rep.save(dadosEntity);
+
+        if (getDados().isEmpty()) {
+            for (DadosDTO x : dados.getValue()) {
+                DadosEntity dadosEntity = DTOtoEntityParse.dadosDTOtoDadosEntity(x);
+                rep.save(dadosEntity);
+            }
+            return rep.findAll();
+        }else {
+            throw new MethodNotAllowed("Já existe dados na tabela");
         }
-        return rep.findAll();
     }
+
 
     public List<DadosDTO> getDados(){
         return rep.findAll().stream().map(DadosDTO::create).collect(Collectors.toList());
