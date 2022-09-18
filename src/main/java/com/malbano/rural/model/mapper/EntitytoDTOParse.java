@@ -8,7 +8,6 @@ public class EntitytoDTOParse {
 
     public static DadosDTO dadosEntitytoDTOParse(DadosEntity entity){
         return  DadosDTO.builder()
-                .id(entity.getId())
                 .areaCusteio(entity.getAreaCusteio())
                 .anoEmissao(entity.getAnoEmissao())
                 .atividade(entity.getAtividade())

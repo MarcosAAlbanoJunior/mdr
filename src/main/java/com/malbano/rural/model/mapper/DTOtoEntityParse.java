@@ -8,8 +8,7 @@ import com.malbano.rural.model.entity.DadosEntity;
 public class DTOtoEntityParse {
 
     public static DadosEntity dadosDTOtoDadosEntity(DadosDTO dto){
-        return  new DadosEntity().builder()
-                .id(dto.getId())
+        return DadosEntity.builder()
                 .areaCusteio(dto.getAreaCusteio())
                 .anoEmissao(dto.getAnoEmissao())
                 .atividade(dto.getAtividade())

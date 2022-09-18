@@ -35,7 +35,7 @@ public class DadosController {
     @PostMapping(path = "/insert")
     public ResponseEntity<Iterable<DadosEntity>> insert() {
         DadosList dadosList = conectaAPI.getDados();
-        return ResponseEntity.ok().body(service.insert(dadosList));
+        return ResponseEntity.ok().body(service.onboarding(dadosList));
     }
 
     @GetMapping()
