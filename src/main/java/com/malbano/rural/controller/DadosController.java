@@ -35,7 +35,7 @@ public class DadosController {
     @PostMapping(path = "/insert")
     public ResponseEntity<Iterable<DadosEntity>> insert() {
         DadosList dadosList = conectaAPI.getDados();
-        return ResponseEntity.ok().body(service.insert(dadosList));
+        return ResponseEntity.ok().body(service.onboarding(dadosList));
     }
 
     @GetMapping()
@@ -58,18 +58,15 @@ public class DadosController {
                                                          @RequestParam(value = "size", defaultValue = "10") Integer size){
         List<DadosDTO> dados = service.getPageable(PageRequest.of(page, size, Sort.Direction.ASC, "id"));
         return dados.isEmpty() ?
-                ResponseEntity.noContent().build() :
-                ResponseEntity.ok(dados);
+                ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.ok(dados);
 
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DadosDTO> get(@PathVariable("id") Long id){
-        DadosDTO carro = service.getDadosByID(id);
-
-        return ResponseEntity.ok(carro);
+        DadosDTO dados = service.getDadosByID(id);
+        return ResponseEntity.ok(dados);
     }
-
     @GetMapping("/custeioAno")
     public ResponseEntity search(@RequestParam("anoEmissao") String anoEmissao) {
         List<AcumuloDTO> dados = service.total(anoEmissao);
@@ -77,7 +74,6 @@ public class DadosController {
                 ResponseEntity.noContent().build() :
                 ResponseEntity.ok(dados);
     }
-
     @PostMapping
     public ResponseEntity post(@RequestBody DadosEntity dados){
         DadosDTO d = service.insert(dados);
@@ -90,7 +86,6 @@ public class DadosController {
         return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(id).toUri();
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<DadosDTO> put(@PathVariable("id") Long id, @RequestBody DadosDTO dados){
         DadosDTO c = service.update(dados, id);
