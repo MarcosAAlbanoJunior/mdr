@@ -64,7 +64,7 @@ class DadosServiceTest {
 
     @Test
     void getDadosFilter() {
-        List<DadosDTO> list = service.getDadosFilter("Leite", null,null,null,null,
+        List<DadosDTO> list = service.getDadosFilter("SOJA", null,null,null,null,
                                                     null,null,null,null,null,
                                                         null,null,null,null);
         assertFalse(list.isEmpty());
@@ -89,9 +89,8 @@ class DadosServiceTest {
 
     @Test
     void total(){
-        String anoEmissao = "2020";
-        List<AcumuloDTO> dados = service.total(anoEmissao);
-        assertTrue(dados.isEmpty());
+        List<AcumuloDTO> dados = service.total("2020");
+        assertFalse(dados.isEmpty());
     }
 
     @Test
@@ -99,7 +98,7 @@ class DadosServiceTest {
        DadosDTO dados;
         Long id = service.getDados().stream().map(DadosDTO::getId).findFirst().orElse(null);
         dados = service.update(listDTO.getDto3(), id);
-        assertEquals("Soja", dados.getNomeProduto());
+        assertEquals("LEITE", dados.getNomeProduto());
 
     }
 

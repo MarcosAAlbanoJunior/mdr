@@ -13,8 +13,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ListaDadosEntity {
 
-    private DadosEntity entity1 = new DadosEntity(1L,"Leite", "SUL", "RS", "0999", "2020", "0201", "3", "21", "06", 2, BigDecimal.valueOf(5580000.0),"2", "21", null);
-    private DadosEntity entity2 = new DadosEntity(2L,"Tomate", "SUL", "PR", "0999", "2020", "0201", "3", "21", "06", 2, BigDecimal.valueOf(5580000.0),"2", "21", null);
-    private DadosEntity entity3 = new DadosEntity(3L,"Soja", "SUL", "PR", "0999", "0", "0201", "3", "21", "06", 2, BigDecimal.valueOf(5580000.0),"2", "21", null);
+    private DadosEntity entity1 = new DadosEntity(1L,"SOJA", "SUL", "RS", "0999", "2020", "0201", "3", "21", "06", 2, BigDecimal.valueOf(5580000.0),"2", "21", null);
+    private DadosEntity entity2 = new DadosEntity(2L,"FEIJÃO", "SUL", "PR", "0999", "2020", "0201", "3", "21", "06", 2, BigDecimal.valueOf(5580000.0),"2", "21", null);
+    private DadosEntity entity3 = new DadosEntity(3L,"LEITE", "SUL", "PR", "0999", "0", "0201", "3", "21", "06", 2, BigDecimal.valueOf(5580000.0),"2", "21", null);
 
 }
