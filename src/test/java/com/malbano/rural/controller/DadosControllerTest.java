@@ -215,21 +215,6 @@ class DadosControllerTest {
     }
 
     @Test
-    public void TestPutNumberException1() {
-        try {
-            Long id = service.getDados().stream().map(DadosDTO::getId).findFirst().orElse(null);
-            listDTO.getDto3().setId(null);
-//            listDTO.getDto3().setMesEmissao(value="${type.uniqueTypeStringValue);
-            rest.put(
-                    "/api/dados/{id}",
-                    listDTO.getDto3(),
-                    id);
-        } catch (HttpMessageNotReadableException e) {
-            //ok
-        }
-    }
-
-    @Test
     public void TestDelete() {
         Long id = service.getDados().stream().map(DadosDTO::getId).findFirst().orElse(null);
         rest.delete("/api/dados/{id}", id);
@@ -276,7 +261,7 @@ class DadosControllerTest {
     public void TesteOnboard() {
         service.deleteAll();
         rest.postForLocation(
-                "/api/dados/insert",
+                "/api/dados/onboard",
                 DadosEntity.class);
         Assertions.assertFalse(service.getDados().isEmpty());
     }
@@ -285,7 +270,7 @@ class DadosControllerTest {
     public void TesteOnboardFail() {
         try {
             rest.postForLocation(
-                    "/api/dados/insert",
+                    "/api/dados/onboard",
                     DadosEntity.class);
             Assertions.assertFalse(service.getDados().isEmpty());
         } catch (MethodNotAllowed e) {

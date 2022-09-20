@@ -34,8 +34,6 @@ public interface DadosRepository extends JpaRepository<DadosEntity, Long> {
             "AND (:cdModalidade IS NULL OR c.cdModalidade = :cdModalidade) AND (:mesEmissao IS NULL OR c.mesEmissao = :mesEmissao) AND (:anoEmissao IS NULL OR c.anoEmissao = :anoEmissao) AND (:qtdCusteio IS NULL OR c.qtdCusteio = :qtdCusteio) AND (:vlCusteio IS NULL OR c.vlCusteio = :vlCusteio) AND (:atividade IS NULL OR c.atividade = :atividade) AND (:areaCusteio IS NULL OR c.areaCusteio = :areaCusteio)")
     List<DadosDTO> findAllFiltro(String nomeProduto, String nomeRegiao, String nomeUF, String cdPrograma, String cdSubPrograma, String cdFonteRecurso, String cdTipoSeguro, String cdModalidade, String mesEmissao, String anoEmissao, Integer qtdCusteio, BigDecimal vlCusteio, String atividade, Double areaCusteio);
 
-//    @Query(value = "DROP TABLE DadosEntity e")
-//    void DeleteAll();
 
 
 }

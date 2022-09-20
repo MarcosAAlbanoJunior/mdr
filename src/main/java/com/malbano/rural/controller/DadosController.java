@@ -33,7 +33,7 @@ public class DadosController {
 
     @Tag(name = "Onboarding")
     @Operation(summary = "Carrega o banco de dados com os primeiros 1000 dados da Matriz de Dados do Crédito Rural")
-    @PostMapping(path = "/insert")
+    @PostMapping(path = "/onboard")
     public ResponseEntity<Iterable<DadosEntity>> insert() {
         DadosList dadosList = conectaAPI.getDados();
         return ResponseEntity.ok().body(service.onboarding(dadosList));
@@ -64,7 +64,7 @@ public class DadosController {
             throw new java.lang.IllegalArgumentException(e.getMessage());
         }
     }
-
+  
     @Tag(name = "Busca")
     @Operation(summary = "Retorna um contrato com o ID informado")
     @GetMapping("/{id}")
@@ -108,9 +108,9 @@ public class DadosController {
     }
 
     @Tag(name = "Manutenção")
-    @Operation(summary = "Remove um contrato de Custeio por Municipio e Produto do ID informado")
-    @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    @Operation(summary = "Remove um contrato de Custeio por Municipio e Produto do ID informado") 
+    @DeleteMapping ("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id){
         service.delete(id);
         return ResponseEntity.ok().build();
     }
