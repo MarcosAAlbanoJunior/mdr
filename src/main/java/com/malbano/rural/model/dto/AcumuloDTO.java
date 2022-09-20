@@ -1,6 +1,5 @@
 package com.malbano.rural.model.dto;
 
-import com.malbano.rural.model.entity.DadosEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
