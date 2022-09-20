@@ -7,6 +7,8 @@ import com.malbano.rural.model.entity.DadosEntity;
 import com.malbano.rural.model.entity.DadosList;
 import com.malbano.rural.feign.ConectaAPI;
 import com.malbano.rural.service.DadosService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,12 +34,16 @@ public class DadosController {
     @Autowired
     ConectaAPI conectaAPI;
 
-    @PostMapping(path = "/insert")
+    @Tag(name = "Onboarding")
+    @Operation(summary = "Carrega o banco de dados com os primeiros 1000 dados da Matriz de Dados do Crédito Rural")
+    @PostMapping(path = "/onboard")
     public ResponseEntity<Iterable<DadosEntity>> insert() {
         DadosList dadosList = conectaAPI.getDados();
         return ResponseEntity.ok().body(service.onboarding(dadosList));
     }
 
+    @Tag(name = "Busca")
+    @Operation(summary = "Retorna contratos de custeio com os filtros informados")
     @GetMapping("/filter")
     public ResponseEntity<List<DadosDTO>> getSearch(@Param(value = "nomeProduto") String nomeProduto, @Param(value = "nomeRegiao") String nomeRegiao, @Param(value = "nomeUF") String nomeUF, @Param(value = "cdPrograma") String cdPrograma, @Param(value = "cdSubPrograma") String cdSubPrograma,
                                     @Param(value = "cdFonteRecurso") String cdFonteRecurso, @Param(value = "cdTipoSeguro") String cdTipoSeguro, @Param(value = "cdModalidade") String cdModalidade, @Param(value = "mesEmissao") String mesEmissao, @Param(value = "anoEmissao") String anoEmissao, @Param(value = "qtdCusteio") Integer qtdCusteio,
@@ -48,6 +54,8 @@ public class DadosController {
                 ResponseEntity.ok(list);
     }
 
+    @Tag(name = "Busca")
+    @Operation(summary = "Retorna contratos de custeio com paginação, com número e tamanho da pagina")
     @GetMapping("/pageable")
     public ResponseEntity<List<DadosDTO>> getPageable(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                                          @RequestParam(value = "size", defaultValue = "10") Integer size){
@@ -56,12 +64,15 @@ public class DadosController {
                 ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.ok(dados);
 
     }
-
+    @Tag(name = "Busca")
+    @Operation(summary = "Retorna um contrato com o ID informado")
     @GetMapping("/{id}")
     public ResponseEntity<DadosDTO> get(@PathVariable("id") Long id){
         DadosDTO dados = service.getDadosByID(id);
         return ResponseEntity.ok(dados);
     }
+    @Tag(name = "Busca")
+    @Operation(summary = "Retorna o valor total de SOJA, MILHO, FEIJÃO, TRIGO e CANA DE AÇUCAR do ano informado")
     @GetMapping("/custeioAno")
     public ResponseEntity search(@RequestParam("anoEmissao") String anoEmissao) {
         List<AcumuloDTO> dados = service.total(anoEmissao);
@@ -69,6 +80,9 @@ public class DadosController {
                 ResponseEntity.noContent().build() :
                 ResponseEntity.ok(dados);
     }
+
+    @Tag(name = "Manutenção")
+    @Operation(summary = "Insere um novo contrato de Custeio por Produto, Região e UF")
     @PostMapping
     public ResponseEntity post(@RequestBody DadosEntity dados){
         DadosDTO d = service.insert(dados);
@@ -81,6 +95,8 @@ public class DadosController {
         return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(id).toUri();
     }
+    @Tag(name = "Manutenção")
+    @Operation(summary = "Atualiza um contrato de Custeio por Produto, Região e UF do ID informado")
     @PutMapping("/{id}")
     public ResponseEntity<DadosDTO> put(@PathVariable("id") Long id, @RequestBody DadosDTO dados){
         DadosDTO c = service.update(dados, id);
@@ -88,11 +104,16 @@ public class DadosController {
         return ResponseEntity.ok(c);
     }
 
+    @Tag(name = "Manutenção")
+    @Operation(summary = "Remove um contrato de Custeio por Municipio e Produto do ID informado")
     @DeleteMapping ("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id){
         service.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @Tag(name = "Manutenção")
+    @Operation(summary = "Deleta todos os dados do Banco de Dados")
     @DeleteMapping ("/deleteAll")
     public ResponseEntity deleteAll() {
         service.deleteAll();
