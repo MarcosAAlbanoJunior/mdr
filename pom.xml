@@ -108,6 +108,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- https://mavenlibs.com/maven/dependency/org.dmfs/express-json -->
+		<dependency>
+			<groupId>org.dmfs</groupId>
+			<artifactId>express-json</artifactId>
+			<version>0.2.0</version>
+		</dependency>
+
 
 	</dependencies>
 	<dependencyManagement>

@@ -38,11 +38,6 @@ public class DadosController {
         return ResponseEntity.ok().body(service.onboarding(dadosList));
     }
 
-    @GetMapping()
-    public ResponseEntity<List<DadosDTO>> get(){
-        return ResponseEntity.ok(service.getDados());
-    }
-
     @GetMapping("/filter")
     public ResponseEntity<List<DadosDTO>> getSearch(@Param(value = "nomeProduto") String nomeProduto, @Param(value = "nomeRegiao") String nomeRegiao, @Param(value = "nomeUF") String nomeUF, @Param(value = "cdPrograma") String cdPrograma, @Param(value = "cdSubPrograma") String cdSubPrograma,
                                     @Param(value = "cdFonteRecurso") String cdFonteRecurso, @Param(value = "cdTipoSeguro") String cdTipoSeguro, @Param(value = "cdModalidade") String cdModalidade, @Param(value = "mesEmissao") String mesEmissao, @Param(value = "anoEmissao") String anoEmissao, @Param(value = "qtdCusteio") Integer qtdCusteio,
@@ -91,20 +86,16 @@ public class DadosController {
         DadosDTO c = service.update(dados, id);
 
         return ResponseEntity.ok(c);
-
     }
 
     @DeleteMapping ("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id){
         service.delete(id);
-
         return ResponseEntity.ok().build();
     }
-
     @DeleteMapping ("/deleteAll")
     public ResponseEntity deleteAll() {
         service.deleteAll();
         return ResponseEntity.ok().build();
     }
-
 }
