@@ -7,7 +7,6 @@ import com.malbano.rural.model.dto.DadosDTO;
 import com.malbano.rural.model.entity.DadosList;
 import com.malbano.rural.service.exception.MethodNotAllowed;
 import com.malbano.rural.service.exception.ObjectNotFoundException;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -79,6 +78,15 @@ class DadosServiceTest {
     void getPageable() {
         List<DadosDTO> list = service.getPageable(PageRequest.of(0, 2, Sort.Direction.ASC, "id"));
         assertFalse(list.isEmpty());
+    }
+
+    @Test
+    void getPageable0() {
+       try {
+           List<DadosDTO> list = service.getPageable(PageRequest.of(0, 0, Sort.Direction.ASC, "id"));
+       } catch (IllegalArgumentException e){
+           //ok
+       }
     }
 
     @Test

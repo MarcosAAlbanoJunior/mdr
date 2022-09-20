@@ -42,7 +42,8 @@ public class DadosService {
             return rep.findAllFiltro(nomeProduto, nomeRegiao, nomeUF, cdPrograma, cdSubPrograma, cdFonteRecurso, cdTipoSeguro, cdModalidade, mesEmissao, anoEmissao, qtdCusteio, vlCusteio, atividade, areaCusteio);}
 
     public List<DadosDTO> getPageable(Pageable pageable){
-        return rep.findAll(pageable).stream().map(DadosDTO::create).collect(Collectors.toList());
+
+            return rep.findAll(pageable).stream().map(DadosDTO::create).collect(Collectors.toList());
     }
     public DadosDTO getDadosByID(Long id) {
         Optional<DadosEntity> dados = rep.findById(id);
