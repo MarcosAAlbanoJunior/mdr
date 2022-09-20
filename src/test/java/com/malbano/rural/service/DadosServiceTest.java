@@ -7,7 +7,6 @@ import com.malbano.rural.model.dto.DadosDTO;
 import com.malbano.rural.model.entity.DadosList;
 import com.malbano.rural.service.exception.MethodNotAllowed;
 import com.malbano.rural.service.exception.ObjectNotFoundException;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,19 +38,20 @@ class DadosServiceTest {
     }
 
     @AfterEach
-    public void deleteSetup(){
+    public void deleteSetup() {
         service.deleteAll();
     }
+
     ListaDadosEntity listEntity = new ListaDadosEntity();
     ListaDadosDTO listDTO = new ListaDadosDTO();
 
     @Test
     void onboarding() {
-        try{
+        try {
             setup();
             fail();
 
-        }catch(MethodNotAllowed e){
+        } catch (MethodNotAllowed e) {
             //ok
         }
     }
@@ -64,9 +64,9 @@ class DadosServiceTest {
 
     @Test
     void getDadosFilter() {
-        List<DadosDTO> list = service.getDadosFilter("Leite", null,null,null,null,
-                                                    null,null,null,null,null,
-                                                        null,null,null,null);
+        List<DadosDTO> list = service.getDadosFilter("SOJA", null, null, null, null,
+                null, null, null, null, null,
+                null, null, null, null);
         assertFalse(list.isEmpty());
     }
 
@@ -82,37 +82,45 @@ class DadosServiceTest {
     }
 
     @Test
+    void getPageable0() {
+        try {
+            List<DadosDTO> list = service.getPageable(PageRequest.of(0, 0, Sort.Direction.ASC, "id"));
+        } catch (IllegalArgumentException e) {
+            //ok
+        }
+    }
+
+    @Test
     void insert() {
         DadosDTO d = service.insert(listEntity.getEntity1());
         assertNotNull(d);
     }
 
     @Test
-    void total(){
-        String anoEmissao = "2020";
-        List<AcumuloDTO> dados = service.total(anoEmissao);
-        assertTrue(dados.isEmpty());
+    void total() {
+        List<AcumuloDTO> dados = service.total("2020");
+        assertFalse(dados.isEmpty());
     }
 
     @Test
     void update() {
-       DadosDTO dados;
+        DadosDTO dados;
         Long id = service.getDados().stream().map(DadosDTO::getId).findFirst().orElse(null);
         dados = service.update(listDTO.getDto3(), id);
-        assertEquals("Soja", dados.getNomeProduto());
+        assertEquals("LEITE", dados.getNomeProduto());
 
     }
 
     @Test
     void delete() {
-       Long id = service.getDados().stream().map(DadosDTO::getId).findFirst().orElse(null);
+        Long id = service.getDados().stream().map(DadosDTO::getId).findFirst().orElse(null);
         service.delete(id);
-         try{
-             service.delete(id);
-             fail("Objeto nao existe");
-         }catch (ObjectNotFoundException e){
-             //ok
-         }
+        try {
+            service.delete(id);
+            fail("Objeto nao existe");
+        } catch (ObjectNotFoundException e) {
+            //ok
+        }
     }
 
     @Test
