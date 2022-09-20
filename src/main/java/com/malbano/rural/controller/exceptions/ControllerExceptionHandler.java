@@ -15,12 +15,12 @@ import java.time.Instant;
 
 
 @ControllerAdvice
-public class ControllerExceptionHandler{
+public class ControllerExceptionHandler {
 
     @ExceptionHandler({
             ObjectNotFoundException.class
     })
-    public ResponseEntity<StandardError> ObjectNotFound(ObjectNotFoundException e, HttpServletRequest request){
+    public ResponseEntity<StandardError> ObjectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
         String error = "Object not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
@@ -36,7 +36,7 @@ public class ControllerExceptionHandler{
     }
 
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})
-    public ResponseEntity<StandardError> badRequest(MethodArgumentTypeMismatchException e,HttpServletRequest request) {
+    public ResponseEntity<StandardError> badRequest(MethodArgumentTypeMismatchException e, HttpServletRequest request) {
         String error = "Database error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
@@ -44,7 +44,7 @@ public class ControllerExceptionHandler{
     }
 
     @ExceptionHandler({HttpMessageNotReadableException.class})
-    public ResponseEntity<StandardError> badRequestCampo(HttpMessageNotReadableException e,HttpServletRequest request) {
+    public ResponseEntity<StandardError> badRequestCampo(HttpMessageNotReadableException e, HttpServletRequest request) {
         String error = "Database error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
@@ -52,7 +52,7 @@ public class ControllerExceptionHandler{
     }
 
     @ExceptionHandler({MethodNotAllowed.class})
-    public ResponseEntity<StandardError> notAlowwedOnboarding(MethodNotAllowed e,HttpServletRequest request) {
+    public ResponseEntity<StandardError> notAlowwedOnboarding(MethodNotAllowed e, HttpServletRequest request) {
         String error = "Insert Error";
         HttpStatus status = HttpStatus.CONFLICT;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
@@ -60,7 +60,7 @@ public class ControllerExceptionHandler{
     }
 
     @ExceptionHandler({java.lang.IllegalArgumentException.class})
-    public ResponseEntity<StandardError> illegalError(java.lang.IllegalArgumentException e,HttpServletRequest request) {
+    public ResponseEntity<StandardError> illegalError(java.lang.IllegalArgumentException e, HttpServletRequest request) {
         String error = "Request Error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());

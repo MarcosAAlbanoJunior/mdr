@@ -60,11 +60,11 @@ public class DadosController {
             List<DadosDTO> dados = service.getPageable(PageRequest.of(pagina, tamanho, Sort.Direction.ASC, "id"));
             return dados.isEmpty() ?
                     ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.ok(dados);
-        }catch(java.lang.IllegalArgumentException e){
+        } catch (java.lang.IllegalArgumentException e) {
             throw new java.lang.IllegalArgumentException(e.getMessage());
         }
     }
-  
+
     @Tag(name = "Busca")
     @Operation(summary = "Retorna um contrato com o ID informado")
     @GetMapping("/{id}")
@@ -108,9 +108,9 @@ public class DadosController {
     }
 
     @Tag(name = "Manutenção")
-    @Operation(summary = "Remove um contrato de Custeio por Municipio e Produto do ID informado") 
-    @DeleteMapping ("/{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id){
+    @Operation(summary = "Remove um contrato de Custeio por Municipio e Produto do ID informado")
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();
     }

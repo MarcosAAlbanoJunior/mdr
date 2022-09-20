@@ -38,19 +38,20 @@ class DadosServiceTest {
     }
 
     @AfterEach
-    public void deleteSetup(){
+    public void deleteSetup() {
         service.deleteAll();
     }
+
     ListaDadosEntity listEntity = new ListaDadosEntity();
     ListaDadosDTO listDTO = new ListaDadosDTO();
 
     @Test
     void onboarding() {
-        try{
+        try {
             setup();
             fail();
 
-        }catch(MethodNotAllowed e){
+        } catch (MethodNotAllowed e) {
             //ok
         }
     }
@@ -63,9 +64,9 @@ class DadosServiceTest {
 
     @Test
     void getDadosFilter() {
-        List<DadosDTO> list = service.getDadosFilter("SOJA", null,null,null,null,
-                                                    null,null,null,null,null,
-                                                        null,null,null,null);
+        List<DadosDTO> list = service.getDadosFilter("SOJA", null, null, null, null,
+                null, null, null, null, null,
+                null, null, null, null);
         assertFalse(list.isEmpty());
     }
 
@@ -82,11 +83,11 @@ class DadosServiceTest {
 
     @Test
     void getPageable0() {
-       try {
-           List<DadosDTO> list = service.getPageable(PageRequest.of(0, 0, Sort.Direction.ASC, "id"));
-       } catch (IllegalArgumentException e){
-           //ok
-       }
+        try {
+            List<DadosDTO> list = service.getPageable(PageRequest.of(0, 0, Sort.Direction.ASC, "id"));
+        } catch (IllegalArgumentException e) {
+            //ok
+        }
     }
 
     @Test
@@ -96,14 +97,14 @@ class DadosServiceTest {
     }
 
     @Test
-    void total(){
+    void total() {
         List<AcumuloDTO> dados = service.total("2020");
         assertFalse(dados.isEmpty());
     }
 
     @Test
     void update() {
-       DadosDTO dados;
+        DadosDTO dados;
         Long id = service.getDados().stream().map(DadosDTO::getId).findFirst().orElse(null);
         dados = service.update(listDTO.getDto3(), id);
         assertEquals("LEITE", dados.getNomeProduto());
@@ -112,14 +113,14 @@ class DadosServiceTest {
 
     @Test
     void delete() {
-       Long id = service.getDados().stream().map(DadosDTO::getId).findFirst().orElse(null);
+        Long id = service.getDados().stream().map(DadosDTO::getId).findFirst().orElse(null);
         service.delete(id);
-         try{
-             service.delete(id);
-             fail("Objeto nao existe");
-         }catch (ObjectNotFoundException e){
-             //ok
-         }
+        try {
+            service.delete(id);
+            fail("Objeto nao existe");
+        } catch (ObjectNotFoundException e) {
+            //ok
+        }
     }
 
     @Test

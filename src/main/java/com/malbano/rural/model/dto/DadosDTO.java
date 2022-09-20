@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
-import javax.persistence.*;
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 
 @Data
