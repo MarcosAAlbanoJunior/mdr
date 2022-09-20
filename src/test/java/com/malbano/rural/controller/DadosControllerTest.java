@@ -25,7 +25,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,6 +139,26 @@ class DadosControllerTest {
         service.deleteAll();
         ResponseEntity<DadosDTO[]> responseEntity = rest.getForEntity("/api/dados/pageable", DadosDTO[].class, 2, 2, Sort.Direction.ASC, "id");
         Assert.assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void testGetComPageableSize0() {
+
+
+           try {
+               ResponseEntity<List<DadosDTO>> responseEntity = rest.exchange(
+                       "/api/dados/pageable?page{page}&size={size}",
+                       HttpMethod.GET,
+                       null,
+                       new ParameterizedTypeReference<List<DadosDTO>>() {
+                       }, 0, 0, Sort.Direction.ASC, "id"
+               );
+           }
+           catch (Exception e){
+               //ok
+           }
+
+
     }
 
     @Test
